@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+# -*- coding: utf-8 -*-
 ##from https://github.com/NamWoo
 
 from __future__ import print_function
@@ -17,6 +17,7 @@ from line_functions import *
 # from measurer_ros import *
 
            
+setArgs = True
 
 class image_converter:
     def __init__(self):
@@ -37,16 +38,17 @@ class image_converter:
         
         if self.cnt == 0:
             h, w, c = cv_image.shape
-            print(h,w)
-            measurer.initialize_warp_trackbars(measurer.warp_initial_vals, w, h)
-
+            print(h, w)
             self.cnt += 1
 
+        # cv_image = cv2.resize(cv_image, (720, 640))
 
+
+        img_detect, x_center = detector.detect(cv_image)
         # cv_image = line_dectecting(cv_image)
         
         # measurer.measure_hsv_ros(cv_image)
-        measurer.measure_warp_point(cv_image)
+        # measurer.measure_warp_point(cv_image)
         
         # cv2.imshow("output", cv_image)
         cv2.waitKey(3)
@@ -72,7 +74,8 @@ def nothing(x):
 
 if __name__ == '__main__':
     
-    measurer = Measurer()
+    # measurer = Measurer()
     # measurer.initialize_hsv_trackbars_nwsetting()
-    
+    detector = LaneDetector()
+
     main(sys.argv)
